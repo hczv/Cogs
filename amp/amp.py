@@ -104,9 +104,9 @@ class amp(commands.Cog):
 
 
     async def api_instance_management(self, ID:int, request):
-        if self.ADS_INSTANCES == "PLACEHOLDER":
-            instances = await self.api_request(self.ADS_PORT, self.api_get_instances)
-            self.ADS_INSTANCES = instances['result'][0]
+        #if self.ADS_INSTANCES == "PLACEHOLDER":
+        instances = await self.api_request(self.ADS_PORT, self.api_get_instances)
+        self.ADS_INSTANCES = instances['result'][0]
         if request == "table":
             table = PrettyTable(['ID', 'Server Name', 'Port', 'Status'])
             ID = 0
