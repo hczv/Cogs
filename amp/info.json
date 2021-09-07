@@ -1,0 +1,13 @@
+{
+    "author" : ["HCZV"],
+    "install_msg" : "You've just installed the AMP cog!",
+    "name" : "amp",
+    "short" : "Manage AMP instances",
+    "description" : "Allows usage of the AMP API to list, start, stop and kill game servers",
+    "required_cogs": {},
+    "requirements": [],
+    "min_bot_version": "3.1.8",
+    "max_bot_version": "0.0.0",
+    "tags": [],
+    "type": "COG"
+}
