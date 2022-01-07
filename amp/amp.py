@@ -41,13 +41,11 @@ class amp(commands.Cog):
         # CREATE G COMMAND
         pass
 
-
     @g.command()
     async def list(self, ctx):
         """Lists AMP game instances"""
         table = await self.api_instance_management(0, "table")
         await ctx.send(table)
-
 
     @g.command()
     async def start(self, ctx, ID : int):
@@ -55,20 +53,17 @@ class amp(commands.Cog):
         PORT = await self.api_instance_management(ID, "port")
         await self.api_request(PORT, self.api_game_start)
 
-
     @g.command()
     async def stop(self, ctx, ID : int):
         """Stops game server"""
         PORT = await self.api_instance_management(ID, "port")
         await self.api_request(PORT, self.api_game_stop)
 
-
     @g.command()
     async def kill(self, ctx, ID : int):
         """Kills game server"""
         PORT = await self.api_instance_management(ID, "port")
         await self.api_request(PORT, self.api_game_kill)
-
 
     async def api_session(self, port):
         # LOGIN URL
@@ -94,15 +89,13 @@ class amp(commands.Cog):
             if STATUS1.Title == "Unauthorized Access":
                 await self.api_session(port)
         
-
     async def api_request(self, port, api):
         await self.check_cred(port)
         API_REQUEST="{}://{}:{}{}".format(self.ADS_PROTO, self.ADS_IP, port, api)
         async with self.session.post(API_REQUEST, json=self.api_sessions.get(port)) as r:
             REQUEST = await r.json()
         return REQUEST
-
-
+ 
     async def api_instance_management(self, ID:int, request):
         #if self.ADS_INSTANCES == "PLACEHOLDER":
         instances = await self.api_request(self.ADS_PORT, self.api_get_instances)
