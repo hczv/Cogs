@@ -6,6 +6,9 @@ from types import SimpleNamespace
 from prettytable import PrettyTable
 import aiohttp
 
+import os
+import sys
+
 class amp(commands.Cog):
     """Application Management Panel (AMP) discord Integration"""
 
@@ -64,6 +67,11 @@ class amp(commands.Cog):
         """Kills game server"""
         PORT = await self.api_instance_management(ID, "port")
         await self.api_request(PORT, self.api_game_kill)
+
+    @g.command()
+    async def test(self, ctx):
+        cmd = 'pwd'
+        await ctx.send(os.system(cmd))
 
     async def api_session(self, port):
         # LOGIN URL
