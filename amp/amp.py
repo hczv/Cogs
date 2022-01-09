@@ -6,7 +6,7 @@ from types import SimpleNamespace
 from prettytable import PrettyTable
 import aiohttp
 
-import data.cred
+import cred
 
 import os
 import sys
