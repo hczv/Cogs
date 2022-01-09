@@ -6,6 +6,8 @@ from types import SimpleNamespace
 from prettytable import PrettyTable
 import aiohttp
 
+import data.cred
+
 import os
 import sys
 
@@ -74,6 +76,7 @@ class amp(commands.Cog):
         await ctx.send("1")
         await ctx.send(os.system(cmd))
         await ctx.send("2")
+        await ctx.send(cred.ads_username)
 
     async def api_session(self, port):
         # LOGIN URL
