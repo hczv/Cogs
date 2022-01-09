@@ -8,7 +8,7 @@ import aiohttp
 
 import os
 #get amp instance information from file
-os.system("ls")
+
 
 
 class amp(commands.Cog):
@@ -72,7 +72,8 @@ class amp(commands.Cog):
 
     @g.command()
     async def test(self, ctx):
-        await ctx.send(self.ADS_password)
+        ls = os.system("ls")
+        await ctx.send(ls)
 
     async def api_session(self, port):
         # LOGIN URL
