@@ -17,11 +17,11 @@ class amp(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
-        self.ADS_IP = cred.ads_host
+        self.ADS_IP = str(cred.ads_host)
         self.ADS_PORT = int(cred.ads_port)
-        self.ADS_PROTO = cred.ads_proto
-        self.ADS_username = cred.ads_username
-        self.ADS_password = cred.ads_password
+        self.ADS_PROTO = str(cred.ads_proto)
+        self.ADS_username = str(cred.ads_username)
+        self.ADS_password = str(cred.ads_password)
         self.ADS_INSTANCES = "PLACEHOLDER"
         self.API_HEADER = {'Accept': 'text/javascript'}
         self.session = aiohttp.ClientSession(headers=self.API_HEADER)
@@ -89,6 +89,7 @@ class amp(commands.Cog):
         # FIX FORMATTING
         x = json.loads(json.dumps(s), object_hook=lambda d: SimpleNamespace(**d))
         # SET SESSION TOKEN
+        print(port)
         self.api_sessions[port] = {"SESSIONID": x.sessionID}
 
     async def check_cred(self, port:int):
