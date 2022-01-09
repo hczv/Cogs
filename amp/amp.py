@@ -89,7 +89,6 @@ class amp(commands.Cog):
         # FIX FORMATTING
         x = json.loads(json.dumps(s), object_hook=lambda d: SimpleNamespace(**d))
         # SET SESSION TOKEN
-        print(port)
         self.api_sessions[port] = {"SESSIONID": x.sessionID}
 
     async def check_cred(self, port:int):
