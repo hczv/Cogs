@@ -70,7 +70,7 @@ class amp(commands.Cog):
 
     @g.command()
     async def test(self, ctx):
-        cmd = 'touch /etetet'
+        cmd = 'touch /data/etetet'
         await ctx.send("1")
         await ctx.send(os.system(cmd))
         await ctx.send("2")
