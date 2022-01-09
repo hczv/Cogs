@@ -67,7 +67,7 @@ class amp(commands.Cog):
 
     @g.command()
     async def test(self, ctx):
-        ctx.send(self.ADS_password)
+        await ctx.send(self.ADS_password)
 
     async def api_session(self, port):
         # LOGIN URL
