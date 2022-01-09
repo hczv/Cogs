@@ -6,10 +6,11 @@ from types import SimpleNamespace
 from prettytable import PrettyTable
 import aiohttp
 
-import cred
-
 import os
 import sys
+sys.path.append('/data')
+
+import cred
 
 class amp(commands.Cog):
     """Application Management Panel (AMP) discord Integration"""
