@@ -18,7 +18,7 @@ class amp(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.ADS_IP = cred.ads_host
-        self.ADS_PORT = cred.ads_port
+        self.ADS_PORT = int(cred.ads_port)
         self.ADS_PROTO = cred.ads_proto
         self.ADS_username = cred.ads_username
         self.ADS_password = cred.ads_password
