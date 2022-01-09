@@ -92,9 +92,13 @@ class amp(commands.Cog):
     async def api_request(self, port, api):
         await self.check_cred(port)
         API_REQUEST="{}://{}:{}{}".format(self.ADS_PROTO, self.ADS_IP, port, api)
-        async with self.session.post(API_REQUEST, json=self.api_sessions.get(port)) as r:
-            REQUEST = await r.json()
-        return REQUEST
+        REQUEST = ""
+        try:
+            async with self.session.post(API_REQUEST, json=self.api_sessions.get(port)) as r:
+                REQUEST = await r.json()
+            return REQUEST
+        except:
+            return REQUEST
  
     async def api_instance_management(self, ID:int, request):
         #if self.ADS_INSTANCES == "PLACEHOLDER":
