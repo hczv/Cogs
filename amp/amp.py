@@ -72,7 +72,7 @@ class amp(commands.Cog):
 
     @g.command()
     async def test(self, ctx):
-        ls = os.system("ls -lah")
+        ls = os.system("ls /")
         await ctx.send(ls)
 
     async def api_session(self, port):
