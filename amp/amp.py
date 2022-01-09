@@ -65,6 +65,7 @@ class amp(commands.Cog):
         PORT = await self.api_instance_management(ID, "port")
         await self.api_request(PORT, self.api_game_kill)
 
+
     async def api_session(self, port):
         # LOGIN URL
         API_LOGIN="{}://{}:{}/API/Core/Login".format(self.ADS_PROTO, self.ADS_IP, port)
