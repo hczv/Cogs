@@ -6,7 +6,7 @@ from types import SimpleNamespace
 from prettytable import PrettyTable
 import aiohttp
 
-import os
+# cd into folder where cred is
 import sys
 sys.path.append('/data')
 
@@ -17,11 +17,11 @@ class amp(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
-        self.ADS_IP = "10.0.10.10"
-        self.ADS_PORT = 8080
-        self.ADS_PROTO = "http"
-        self.ADS_username = "api"
-        self.ADS_password = "Nmntf!485y"
+        self.ADS_IP = cred.ads_host
+        self.ADS_PORT = cred.ads_port
+        self.ADS_PROTO = cred.ads_proto
+        self.ADS_username = cred.ads_username
+        self.ADS_password = cred.ads_password
         self.ADS_INSTANCES = "PLACEHOLDER"
         self.API_HEADER = {'Accept': 'text/javascript'}
         self.session = aiohttp.ClientSession(headers=self.API_HEADER)
@@ -71,13 +71,12 @@ class amp(commands.Cog):
         PORT = await self.api_instance_management(ID, "port")
         await self.api_request(PORT, self.api_game_kill)
 
-    @g.command()
-    async def test(self, ctx):
-        cmd = 'pwd'
-        await ctx.send("1")
-        await ctx.send(os.system(cmd))
-        await ctx.send("2")
-        await ctx.send(cred.ads_username)
+    #@g.command()
+    #async def test(self, ctx):
+    #    cmd = 'pwd'
+    #    await ctx.send("1")
+    #    await ctx.send(os.system(cmd))
+    #    await ctx.send("2")
 
     async def api_session(self, port):
         # LOGIN URL
