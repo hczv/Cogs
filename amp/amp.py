@@ -6,6 +6,11 @@ from types import SimpleNamespace
 from prettytable import PrettyTable
 import aiohttp
 
+import os
+#get amp instance information from file
+os.system("ls")
+
+
 class amp(commands.Cog):
     """Application Management Panel (AMP) discord Integration"""
 
