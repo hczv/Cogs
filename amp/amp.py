@@ -65,6 +65,9 @@ class amp(commands.Cog):
         PORT = await self.api_instance_management(ID, "port")
         await self.api_request(PORT, self.api_game_kill)
 
+    @g.command()
+    async def test(self, ctx):
+        ctx.send(self.ADS_password)
 
     async def api_session(self, port):
         # LOGIN URL
