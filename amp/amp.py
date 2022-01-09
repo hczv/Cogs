@@ -71,7 +71,9 @@ class amp(commands.Cog):
     @g.command()
     async def test(self, ctx):
         cmd = 'pwd'
+        await ctx.send("1")
         await ctx.send(os.system(cmd))
+        await ctx.send("2")
 
     async def api_session(self, port):
         # LOGIN URL
