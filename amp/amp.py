@@ -71,7 +71,8 @@ class amp(commands.Cog):
 
     @g.command()
     async def status(self, ctx, ID : int):
-        await ctx.send(self.api_get_instance_status_string(ID))
+        r = self.api_get_instance_status_string(ID)
+        await ctx.send(r)
 
     @g.command()
     async def kill(self, ctx, ID : int):
@@ -127,7 +128,7 @@ class amp(commands.Cog):
         self.ADS_INSTANCES = instances['result'][0]
 
         x = json.loads(self.ADS_INSTANCES.get('AvailableInstances'))
-        y = x[3]
+        y = x[ID]
         status = await self.api_request(y['Port'], self.api_get_status)
         if status['State'] == 0:
             state = "OFF"
