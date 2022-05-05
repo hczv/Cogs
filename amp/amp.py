@@ -8,9 +8,11 @@ import aiohttp
 
 # cd into folder where cred is
 import sys
+
 sys.path.append('/data')
 
 import cred
+
 
 class amp(commands.Cog):
     """Application Management Panel (AMP) discord Integration"""
@@ -41,7 +43,7 @@ class amp(commands.Cog):
         self.api_sessions[8087] = {'SESSIONID': '00000000-0000-0000-0000-000000000000'}
         self.api_sessions[8088] = {'SESSIONID': '00000000-0000-0000-0000-000000000000'}
         self.api_sessions[8089] = {'SESSIONID': '00000000-0000-0000-0000-000000000000'}
-        
+
     @commands.group()
     async def g(self, ctx: commands.Context):
         # CREATE G COMMAND
@@ -54,35 +56,35 @@ class amp(commands.Cog):
         await ctx.send(table)
 
     @g.command()
-    async def start(self, ctx, ID : int):
+    async def start(self, ctx, ID: int):
         """Starts game server"""
         PORT = await self.api_instance_management(ID, "port")
         await ctx.send("Starting server...")
         await self.api_request(PORT, self.api_game_start)
-        while(True):
+        while (True):
             await self.api_request(PORT, self.api_game_status)
 
     @g.command()
-    async def stop(self, ctx, ID : int):
+    async def stop(self, ctx, ID: int):
         """Stops game server"""
         PORT = await self.api_instance_management(ID, "port")
         await ctx.send("Stopping server...")
         await self.api_request(PORT, self.api_game_stop)
 
     @g.command()
-    async def status(self, ctx, ID : int):
+    async def status(self, ctx, ID: int):
         r = await self.api_get_instance_status_string(ID)
         await ctx.send(r)
 
     @g.command()
-    async def kill(self, ctx, ID : int):
+    async def kill(self, ctx, ID: int):
         """Kills game server"""
         PORT = await self.api_instance_management(ID, "port")
         await ctx.send("Killing server...")
         await self.api_request(PORT, self.api_game_kill)
 
-    #@g.command()
-    #async def test(self, ctx):
+    # @g.command()
+    # async def test(self, ctx):
     #    cmd = 'pwd'
     #    await ctx.send("1")
     #    await ctx.send(os.system(cmd))
@@ -90,9 +92,10 @@ class amp(commands.Cog):
 
     async def api_session(self, port):
         # LOGIN URL
-        API_LOGIN="{}://{}:{}/API/Core/Login".format(self.ADS_PROTO, self.ADS_IP, port)
+        API_LOGIN = "{}://{}:{}/API/Core/Login".format(self.ADS_PROTO, self.ADS_IP, port)
         # LOGIN INFO
-        API_LOGIN_INFO = {"username": "{}".format(self.ADS_username),"password": "{}".format(self.ADS_password), "token": "", "rememberMe": "false"}
+        API_LOGIN_INFO = {"username": "{}".format(self.ADS_username), "password": "{}".format(self.ADS_password),
+                          "token": "", "rememberMe": "false"}
         # LOGIN REQUEST
         async with self.session.post(API_LOGIN, json=API_LOGIN_INFO) as r:
             s = await r.json()
@@ -101,9 +104,9 @@ class amp(commands.Cog):
         # SET SESSION TOKEN
         self.api_sessions[port] = {"SESSIONID": x.sessionID}
 
-    async def check_cred(self, port:int):
+    async def check_cred(self, port: int):
         # NEED TO VERIFY IF IT WORKS
-        API_GET_STATUS="{}://{}:{}{}".format(self.ADS_PROTO, self.ADS_IP, port, self.api_get_status)
+        API_GET_STATUS = "{}://{}:{}{}".format(self.ADS_PROTO, self.ADS_IP, port, self.api_get_status)
         json1 = self.api_sessions.get(port)
         async with self.session.post(API_GET_STATUS, json=json1) as r:
             STATUS1 = await r.json()
@@ -111,10 +114,10 @@ class amp(commands.Cog):
         if hasattr(STATUS1, 'Title'):
             if STATUS1.Title == "Unauthorized Access":
                 await self.api_session(port)
-        
+
     async def api_request(self, port, api):
         await self.check_cred(port)
-        API_REQUEST="{}://{}:{}{}".format(self.ADS_PROTO, self.ADS_IP, port, api)
+        API_REQUEST = "{}://{}:{}{}".format(self.ADS_PROTO, self.ADS_IP, port, api)
         REQUEST = ""
         try:
             async with self.session.post(API_REQUEST, json=self.api_sessions.get(port)) as r:
@@ -123,13 +126,12 @@ class amp(commands.Cog):
         except:
             return REQUEST
 
-    async def api_get_instance_status_string(self, ID:int):
+    async def api_get_instance_status_string(self, ID: int):
         instances = await self.api_request(self.ADS_PORT, self.api_get_instances)
         self.ADS_INSTANCES = instances['result'][0]
 
-        x = json.loads(self.ADS_INSTANCES.get('AvailableInstances'))
-        y = x[ID]
-        status = await self.api_request(y['Port'], self.api_get_status)
+        x = self.ADS_INSTANCES.get('AvailableInstances').index(ID)
+        status = await self.api_request(x['Port'], self.api_get_status)
         if status['State'] == 0:
             state = "OFF"
         elif status['State'] == 10:
@@ -144,8 +146,8 @@ class amp(commands.Cog):
             state = status['State']
         return state
 
-    async def api_instance_management(self, ID:int, request):
-        #if self.ADS_INSTANCES == "PLACEHOLDER":
+    async def api_instance_management(self, ID: int, request):
+        # if self.ADS_INSTANCES == "PLACEHOLDER":
         instances = await self.api_request(self.ADS_PORT, self.api_get_instances)
         self.ADS_INSTANCES = instances['result'][0]
         if request == "table":
