@@ -63,7 +63,7 @@ class amp(commands.Cog):
         await self.api_request(PORT, self.api_game_start)
         i = 0
         while (True):
-            status = self.api_get_instance_status_string(ID)
+            status = await self.api_get_instance_status_string(ID)
             if status == "Running":
                 await ctx.send("Started")
                 break
