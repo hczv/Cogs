@@ -64,7 +64,7 @@ class amp(commands.Cog):
         i = 0
         while (True):
             status = self.api_get_instance_status_string
-            if status == "RUNNING":
+            if status == "Running":
                 await ctx.send("Started")
                 break
             if i >= 10:
