@@ -8,7 +8,7 @@ import aiohttp
 
 # cd into folder where cred is
 import sys
-
+import time
 sys.path.append('/data')
 
 import cred
@@ -61,8 +61,16 @@ class amp(commands.Cog):
         PORT = await self.api_instance_management(ID, "port")
         await ctx.send("Starting server...")
         await self.api_request(PORT, self.api_game_start)
+        i = 0
         while (True):
-            await self.api_request(PORT, self.api_game_status)
+            status = self.api_get_instance_status_string
+            if status == "RUNNING":
+                await ctx.send("Started")
+                break
+            if i >= 10:
+                break
+            i = i + 1
+            time.sleep(5000)
 
     @g.command()
     async def stop(self, ctx, ID: int):
@@ -129,10 +137,8 @@ class amp(commands.Cog):
     async def api_get_instance_status_string(self, ID: int):
         instances = await self.api_request(self.ADS_PORT, self.api_get_instances)
         self.ADS_INSTANCES = instances['result'][0]
-
         ID2 = ID - 1
         x = self.ADS_INSTANCES.get('AvailableInstances')[ID2]
-
         status = await self.api_request(x['Port'], self.api_get_status)
         if status['State'] == 0:
             state = "OFF"
