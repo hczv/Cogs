@@ -57,6 +57,7 @@ class amp(commands.Cog):
     async def start(self, ctx, ID : int):
         """Starts game server"""
         PORT = await self.api_instance_management(ID, "port")
+        await ctx.send("Starting server...")
         await self.api_request(PORT, self.api_game_start)
         while(True):
             await self.api_request(PORT, self.api_game_status)
@@ -65,6 +66,7 @@ class amp(commands.Cog):
     async def stop(self, ctx, ID : int):
         """Stops game server"""
         PORT = await self.api_instance_management(ID, "port")
+        await ctx.send("Stopping server...")
         await self.api_request(PORT, self.api_game_stop)
 
     @g.command()
@@ -75,6 +77,7 @@ class amp(commands.Cog):
     async def kill(self, ctx, ID : int):
         """Kills game server"""
         PORT = await self.api_instance_management(ID, "port")
+        await ctx.send("Killing server...")
         await self.api_request(PORT, self.api_game_kill)
 
     #@g.command()
@@ -118,7 +121,28 @@ class amp(commands.Cog):
             return REQUEST
         except:
             return REQUEST
- 
+
+    async def api_get_instance_status_string(self, ID:int):
+        instances = await self.api_request(self.ADS_PORT, self.api_get_instances)
+        self.ADS_INSTANCES = instances['result'][0]
+
+        x = json.loads(self.ADS_INSTANCES.get('AvailableInstances'))
+        y = x[3]
+        status = await self.api_request(y['Port'], self.api_get_status)
+        if status['State'] == 0:
+            state = "OFF"
+        elif status['State'] == 10:
+            state = "Starting"
+        elif status['State'] == 20:
+            state = "Running"
+        elif status['State'] == 40:
+            state = "Shutting down"
+        elif status['State'] == 100:
+            state = "Killed"
+        else:
+            state = status['State']
+        return state
+
     async def api_instance_management(self, ID:int, request):
         #if self.ADS_INSTANCES == "PLACEHOLDER":
         instances = await self.api_request(self.ADS_PORT, self.api_get_instances)
