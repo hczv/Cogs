@@ -130,7 +130,7 @@ class amp(commands.Cog):
         instances = await self.api_request(self.ADS_PORT, self.api_get_instances)
         self.ADS_INSTANCES = instances['result'][0]
 
-        ID2 = ID + 1
+        ID2 = ID - 1
         x = self.ADS_INSTANCES.get('AvailableInstances')[ID2]
 
         status = await self.api_request(x['Port'], self.api_get_status)
