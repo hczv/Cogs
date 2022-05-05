@@ -30,7 +30,7 @@ class amp(commands.Cog):
         self.api_game_start = "/API/Core/Start"
         self.api_game_stop = "/API/Core/Stop"
         self.api_game_kill = "/API/Core/Kill"
-        self.api_sessions = {}
+        self.api_sessions = dict()
         self.api_sessions[8080] = {'SESSIONID': '00000000-0000-0000-0000-000000000000'}
         self.api_sessions[8081] = {'SESSIONID': '00000000-0000-0000-0000-000000000000'}
         self.api_sessions[8082] = {'SESSIONID': '00000000-0000-0000-0000-000000000000'}
@@ -58,12 +58,18 @@ class amp(commands.Cog):
         """Starts game server"""
         PORT = await self.api_instance_management(ID, "port")
         await self.api_request(PORT, self.api_game_start)
+        while(True):
+            await self.api_request(PORT, self.api_game_status)
 
     @g.command()
     async def stop(self, ctx, ID : int):
         """Stops game server"""
         PORT = await self.api_instance_management(ID, "port")
         await self.api_request(PORT, self.api_game_stop)
+
+    @g.command()
+    async def status(self, ctx, ID : int):
+        await ctx.send(self.api_get_instance_status_string(ID))
 
     @g.command()
     async def kill(self, ctx, ID : int):
