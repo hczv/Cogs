@@ -67,7 +67,7 @@ class amp(commands.Cog):
             if status == "Running":
                 await ctx.send("Started")
                 break
-            if i >= 10:
+            if i >= 20:
                 break
             i = i + 1
             time.sleep(5)
