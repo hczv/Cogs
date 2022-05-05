@@ -70,7 +70,7 @@ class amp(commands.Cog):
             if i >= 10:
                 break
             i = i + 1
-            time.sleep(5000)
+            time.sleep(5)
 
     @g.command()
     async def stop(self, ctx, ID: int):
