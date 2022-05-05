@@ -68,6 +68,7 @@ class amp(commands.Cog):
                 await ctx.send("Started")
                 break
             if i >= 20:
+                await ctx.send("Could not verify status")
                 break
             i = i + 1
             time.sleep(5)
