@@ -131,7 +131,7 @@ class amp(commands.Cog):
         self.ADS_INSTANCES = instances['result'][0]
 
         x = self.ADS_INSTANCES.get('AvailableInstances')[ID]
-        return type(x)
+
         status = await self.api_request(x['Port'], self.api_get_status)
         if status['State'] == 0:
             state = "OFF"
