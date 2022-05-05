@@ -71,7 +71,7 @@ class amp(commands.Cog):
 
     @g.command()
     async def status(self, ctx, ID : int):
-        r = self.api_get_instance_status_string(ID)
+        r = await self.api_get_instance_status_string(ID)
         await ctx.send(r)
 
     @g.command()
