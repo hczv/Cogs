@@ -15,7 +15,7 @@ import cred
 class amp(commands.Cog):
     """Application Management Panel (AMP) discord Integration"""
 
-    def __init__(self, bot):
+    12def __init__(self, bot):
         self.bot = bot
         self.ADS_IP = str(cred.ads_host)
         self.ADS_PORT = int(cred.ads_port)
